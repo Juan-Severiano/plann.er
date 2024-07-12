@@ -1,11 +1,15 @@
+import { createContext, useContext } from 'react'
+
 import clsx from "clsx";
-import { Text, TextProps, TouchableOpacity, TouchableOpacityProps } from "react-native";
+import { Text, TextProps, TouchableOpacity, TouchableOpacityProps, ActivityIndicator } from "react-native";
 
 type Variants = 'primary' | 'secondary'
 type ButtonProps = TouchableOpacityProps & {
   variant?: Variants
   isLoading?: boolean
 }
+
+const ThemeContext = createContext<{ variant?: Variants }>({})
 
 function Button({ variant = 'primary', isLoading, children, ...rest }: ButtonProps) {
   return (
@@ -21,14 +25,25 @@ function Button({ variant = 'primary', isLoading, children, ...rest }: ButtonPro
       activeOpacity={0.7}
       {...rest}
     >
-      {children}
+      <ThemeContext.Provider value={{ variant }}>
+        {isLoading ? <ActivityIndicator className='text-lime-950' /> : children}
+      </ThemeContext.Provider>
     </TouchableOpacity>
   )
 }
 
 function Title({ children }: TextProps) {
+  const { variant } = useContext(ThemeContext);
+
   return (
-    <Text>{children}</Text>
+    <Text
+      className={clsx("text-base font-semibold",
+        {
+          "text-lime-950": variant == 'primary',
+          "text-zinc-200": variant == 'secondary'
+        }
+      )}
+    >{children}</Text>
   )
 }
 
