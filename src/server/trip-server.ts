@@ -29,7 +29,7 @@ async function create({ destination, ends_at, starts_at, emails_to_invite }: Tri
       starts_at,
       emails_to_invite,
       owner_name: "Francisco Juan",
-      owner_email: "juansoussev@gmail.com"
+      owner_email: "chiquim@gmail.com"
     });
 
     return data

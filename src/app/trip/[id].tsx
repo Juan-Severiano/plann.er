@@ -73,6 +73,8 @@ export default function Trip() {
     setSelectedDates(dates)
   }
 
+  console.log(tripId)
+
   async function handleUpdateTrip() {
     try {
       setIsUpdatingTrip(true)
@@ -131,7 +133,7 @@ export default function Trip() {
       </Input>
       {
         option === 'activity' ? (
-          <Activities tripDetails={tripDetails} />
+          tripDetails && <Activities tripDetails={tripDetails} />
         ) : (
           <Details tripId={tripDetails.id} />
         )

@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-const TRIP_STORAGE_KEY = '@planner:tripId'
+const TRIP_STORAGE_KEY = '@plann.er:tripId'
 
 async function save(tripId: string) {
   try {
