@@ -38,6 +38,16 @@ async function create({ destination, ends_at, starts_at, emails_to_invite }: Tri
   }
 }
 
+async function update({ destination, ends_at, id, starts_at }: Omit<TripDetails, 'is_confirmed'>) {
+  try {
+    await api.put(`/trips/${id}`, {
+      destination, ends_at, starts_at
+    })
+  } catch (error) {
+    throw error
+  }
+}
+
 export const tripServer = {
-  getById, create
+  getById, create, update
 }
