@@ -4,10 +4,16 @@ import { LogOutIcon } from 'lucide-react-native'
 import { colors } from '@/styles/colors'
 import { Button } from '@/components/button'
 import { useAuth, useUser } from '@clerk/clerk-expo'
+import { tripStorage } from '@/storage/trip'
 
 export default function Page() {
   const { user } = useUser()
   const { signOut } = useAuth()
+
+  async function handleSignOut() {
+    await tripStorage.remove()
+    await signOut()
+  }
 
   return (
     <View className='flex-1 items-center pt-16 px-5 bg-zinc-950'>
@@ -32,7 +38,7 @@ export default function Page() {
         Seja bem vindo a sua conta
       </Text>
 
-      <Button className='w-full mt-auto mb-10' variant='error' onPress={() => signOut()}>
+      <Button className='w-full mt-auto mb-10' variant='error' onPress={handleSignOut}>
         <Button.Title>Sair</Button.Title>
         <LogOutIcon color={colors.zinc[300]} />
       </Button>
