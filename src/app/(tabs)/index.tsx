@@ -16,6 +16,7 @@ import { tripStorage } from '@/storage/trip'
 import { router } from 'expo-router'
 import { tripServer } from '@/server/trip-server'
 import { Loading } from '@/components/loading'
+import { useUser } from '@clerk/clerk-expo'
 
 enum StepForm {
   TRIP_DETAILS = 1,
@@ -37,6 +38,7 @@ export default function Index() {
   const [destination, setDestination] = useState('')
   const [emailToInvite, setEmailToInvite] = useState('')
   const [emailsToInvite, setEmailsToInvite] = useState<string[]>([])
+  const { user } = useUser()
 
   function handleNextStepForm() {
     if (destination.trim().length === 0 || !selectedDates.startsAt || !selectedDates.endsAt) {
@@ -92,7 +94,7 @@ export default function Index() {
   async function saveTrip(tripId: string) {
     try {
       await tripStorage.save(tripId)
-      router.navigate(`/trip/${tripId}`)
+      router.navigate(`trip/${tripId}`)
     } catch (error) {
       Alert.alert('Salvar viagem', 'Não foi possível salvar sua viagem no seu dispositivo')
       console.log(error)
@@ -106,7 +108,9 @@ export default function Index() {
         destination,
         starts_at: dayjs(selectedDates.startsAt?.dateString).toString(),
         ends_at: dayjs(selectedDates.endsAt?.dateString).toString(),
-        emails_to_invite: emailsToInvite
+        emails_to_invite: emailsToInvite,
+        owner_email: user?.primaryEmailAddress?.emailAddress!,
+        owner_name: user?.fullName!,
       });
 
       Alert.alert('Nova viagem', 'Viagem criada com sucesso!', [
@@ -130,7 +134,7 @@ export default function Index() {
       const trip = await tripServer.getById(tripId);
 
       if (trip) {
-        return router.navigate(`/trip/${tripId}`)
+        return router.navigate(`trip/${tripId}`)
       }
     } catch (error) {
       setIsGettingTrip(false)
@@ -147,7 +151,7 @@ export default function Index() {
   }
 
   return (
-    <View className='flex-1 items-center justify-center px-5'>
+    <View className='flex-1 items-center justify-center px-5 bg-zinc-950'>
       <Image
         source={require('@/assets/logo.png')}
         className='h-8'

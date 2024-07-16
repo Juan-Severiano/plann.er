@@ -5,7 +5,7 @@ import { TripDetails, tripServer } from "@/server/trip-server";
 import { colors } from "@/styles/colors";
 import dayjs from "dayjs";
 import { router, useLocalSearchParams } from "expo-router";
-import { CalendarRange, Info, MapPin, Settings2, Calendar as IconCalendar, User, Mail } from "lucide-react-native";
+import { CalendarRange, Info, MapPin, Settings2, Calendar as IconCalendar, User, Mail, CircleUser } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import { Alert, Keyboard, Text, TouchableOpacity, View } from "react-native";
 import { Activities } from "./activities";
@@ -158,7 +158,7 @@ export default function Trip() {
   }
 
   return (
-    <View className="flex-1 px-5 pt-16">
+    <View className="flex-1 px-5 pt-16 bg-zinc-950">
       <Input variant="tertiary">
         <MapPin color={colors.zinc[400]} size={20} />
         <Input.Field value={tripDetails.when} readOnly />
@@ -227,6 +227,10 @@ export default function Trip() {
 
           <Button onPress={handleUpdateTrip} isLoading={isUpdatingTrip}>
             <Button.Title>Atualizar</Button.Title>
+          </Button>
+          <Button onPress={() => router.navigate('(tabs)/account')} isLoading={isUpdatingTrip}>
+            <CircleUser color={colors.zinc[800]} />
+            <Button.Title>Ir para meu perfil</Button.Title>
           </Button>
         </View>
       </Modal>

@@ -10,6 +10,8 @@ export type TripDetails = {
 
 type TripCreate = Omit<TripDetails, 'id' | 'is_confirmed'> & {
   emails_to_invite: string[]
+  owner_name: string
+  owner_email: string
 }
 
 async function getById(id: string) {
@@ -21,15 +23,15 @@ async function getById(id: string) {
   }
 }
 
-async function create({ destination, ends_at, starts_at, emails_to_invite }: TripCreate) {
+async function create({ destination, ends_at, starts_at, emails_to_invite, owner_email, owner_name }: TripCreate) {
   try {
     const { data } = await api.post<{ tripId: string }>('/trips', {
       destination,
       ends_at,
       starts_at,
       emails_to_invite,
-      owner_name: "Francisco Juan",
-      owner_email: "chiquim@gmail.com"
+      owner_name,
+      owner_email
     });
 
     return data

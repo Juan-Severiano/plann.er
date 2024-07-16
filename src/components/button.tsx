@@ -3,7 +3,7 @@ import { createContext, useContext } from 'react'
 import clsx from "clsx";
 import { Text, TextProps, TouchableOpacity, TouchableOpacityProps, ActivityIndicator } from "react-native";
 
-type Variants = 'primary' | 'secondary'
+type Variants = 'primary' | 'secondary' | 'error'
 type ButtonProps = TouchableOpacityProps & {
   variant?: Variants
   isLoading?: boolean
@@ -19,6 +19,7 @@ function Button({ variant = 'primary', isLoading, children, className, ...rest }
         {
           "bg-lime-300": variant === 'primary',
           "bg-zinc-800": variant === 'secondary',
+          "bg-red-700": variant === 'error',
         },
         className
       )}
@@ -41,7 +42,8 @@ function Title({ children }: TextProps) {
       className={clsx("text-base font-semibold",
         {
           "text-lime-950": variant == 'primary',
-          "text-zinc-200": variant == 'secondary'
+          "text-zinc-200": variant == 'secondary',
+          "text-zinc-300": variant === 'error',
         }
       )}
     >{children}</Text>
