@@ -12,9 +12,6 @@
       "resizeMode": "contain",
       "backgroundColor": "#09090b"
     },
-    "ios": {
-      "supportsTablet": true
-    },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
@@ -22,25 +19,12 @@
       },
       "package": "com.juansev.planner"
     },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
-    },
     "plugins": [
       "expo-router",
       "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
-    },
-    "extra": {
-      "router": {
-        "origin": false
-      },
-      "eas": {
-        "projectId": "f50ac514-3800-4466-a97d-9878c5257690"
-      }
     }
   }
 }
